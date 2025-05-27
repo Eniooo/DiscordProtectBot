@@ -18,7 +18,7 @@
    npm install discord.js @discordjs/rest @discordjs/builders sqlite3 weather-js node-fetch@2 dotenv
    ```
 
-4. Créez un fichier `.env` à la racine et ajoutez-y :
+4. Modifiez le fichier `.env` à la racine et ajoutez-y :
    ```env
    # Token de votre bot Discord
    TOKEN=VotreTokenDiscord
