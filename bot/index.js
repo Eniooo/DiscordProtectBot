@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import fs from 'fs';
-import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import { Client, GatewayIntentBits, Collection, ActivityType } from 'discord.js';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { dirname, resolve } from 'path';
 
@@ -39,8 +39,17 @@ if (fs.existsSync(eventsPath)) {
   }
 }
 
-// Log prêt
+// Log prêt et définition du statut
 client.once('ready', () => {
+  client.user.setPresence({
+    status: 'idle',
+    activities: [
+      {
+        name: '/help',
+        type: ActivityType.Listening
+      }
+    ]
+  });
   console.log(`✅ Connecté en tant que ${client.user.tag}`);
 });
 
