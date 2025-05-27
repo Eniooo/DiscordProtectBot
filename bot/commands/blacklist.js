@@ -42,6 +42,9 @@ export async function execute(interaction) {
   list.push(word);
   fs.writeFileSync(filePath, JSON.stringify(list, null, 2), 'utf-8');
 
+  // Met à jour la liste en mémoire si vous y stockez
+  interaction.client.blacklist = list;
+
   await interaction.reply({
     content: `✅ Le mot \`${word}\` a été ajouté à la blacklist.`,
     ephemeral: false

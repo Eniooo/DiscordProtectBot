@@ -8,10 +8,11 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction) {
   await interaction.deferReply({ ephemeral: false });
   try {
-    const res = await fetch('https://meme-api.herokuapp.com/gimme');
-    if (!res.ok) throw new Error('Meme API non disponible');
+    // ← Changement d’URL : l’ancien herokuapp est coupé
+    const res = await fetch('https://meme-api.com/gimme');
+    if (!res.ok) throw new Error(`Meme API non disponible (status ${res.status})`);
+    
     const { title, url, postLink, subreddit, author } = await res.json();
-
     const embed = new EmbedBuilder()
       .setTitle(title)
       .setURL(postLink)
@@ -21,13 +22,13 @@ export async function execute(interaction) {
 
     await interaction.editReply({ embeds: [embed] });
 
-    // Log dans le salon de logs
+    // Log dans le salon de logs (si existe)
     const logChannel = interaction.guild?.channels.cache.get('1358548828004814939');
-    if (logChannel) {
+    if (logChannel?.isTextBased()) {
       logChannel.send(`📨 ${interaction.user.tag} a utilisé la commande \`/meme\`. • By Eniooo`);
     }
   } catch (error) {
-    console.error(error);
+    console.error('Erreur /meme:', error);
     await interaction.editReply({ content: '❌ Impossible de récupérer un mème pour le moment. By Eniooo' });
   }
 }

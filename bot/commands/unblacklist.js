@@ -40,6 +40,9 @@ export async function execute(interaction) {
     fs.writeFileSync(filePath, JSON.stringify(updated, null, 2), 'utf-8');
     await interaction.reply({ content: `✅ Le mot \`${word}\` a été retiré de la blacklist.`, ephemeral: false });
 
+    // Met à jour la liste en mémoire si vous y stockez
+    interaction.client.blacklist = updated;
+    
     const logChannel = interaction.guild.channels.cache.get('1358548828004814939');
     if (logChannel) {
       logChannel.send(`✅ ${interaction.user.tag} a retiré le mot "${word}" de la blacklist. • By Eniooo`);

@@ -34,8 +34,13 @@ if (fs.existsSync(eventsPath)) {
   for (const file of fs.readdirSync(eventsPath).filter(f => f.endsWith('.js'))) {
     const filePath = resolve(eventsPath, file);
     const fileUrl = pathToFileURL(filePath).href;
-    const { name, execute } = await import(fileUrl);
-    client.on(name, execute);
+    const eventModule = await import(fileUrl);
+    const event = eventModule.default ?? eventModule;
+    if (event.name && typeof event.execute === 'function') {
+      client.on(event.name, (...args) => event.execute(...args));
+    } else {
+      console.warn(`Le module d'événement ${file} n'exporte pas correctement name et execute`);
+    }
   }
 }
 
@@ -68,18 +73,5 @@ client.on('interactionCreate', async interaction => {
     await replyFn({ content: '❌ Une erreur est survenue.', ephemeral: true });
   }
 });
-
-// ❌ TEMPORAIREMENT désactivé : socket.io
-// Assure-toi que dashboard/index.js contient bien : export { io }
-// import { io } from '../dashboard/index.js';
-// client.on('guildMemberAdd', member => {
-//   io.emit('log', { timestamp: new Date().toLocaleTimeString(), message: `${member.user.tag} a rejoint.` });
-// });
-// client.on('warn', (user, reason) => {
-//   io.emit('warn', { timestamp: new Date().toLocaleTimeString(), user: user.tag, reason });
-// });
-// client.on('ban', (user, reason) => {
-//   io.emit('ban', { timestamp: new Date().toLocaleTimeString(), user: user.tag, reason });
-// });
 
 client.login(process.env.TOKEN);

@@ -1,12 +1,10 @@
 import fs from 'fs';
 import { resolve } from 'path';
-import { SlashCommandBuilder, PermissionsBitField } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
 
 export const data = new SlashCommandBuilder()
   .setName('autorole')
   .setDescription('Gère le rôle attribué automatiquement aux nouveaux membres.')
-  // Restreint l'utilisation de la commande aux administrateurs
-  .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
   .addSubcommand(sub =>
     sub
       .setName('set')
@@ -25,11 +23,6 @@ export const data = new SlashCommandBuilder()
   );
 
 export async function execute(interaction) {
-  // Vérification des permissions administrateur
-  if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-    return interaction.reply({ content: '❌ Vous devez être administrateur pour utiliser cette commande.', ephemeral: true });
-  }
-
   // Assure-toi que le dossier /data existe
   const dataDir = resolve(process.cwd(), 'data');
   if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
