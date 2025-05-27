@@ -1,4 +1,5 @@
-import { SlashCommandBuilder } from 'discord.js';
+// === note.js ===
+import { SlashCommandBuilder, PermissionsBitField } from 'discord.js';
 import fs from 'fs';
 import { resolve } from 'path';
 
@@ -7,6 +8,8 @@ const notesPath = resolve(process.cwd(), 'data', 'notes.json');
 export const data = new SlashCommandBuilder()
   .setName('note')
   .setDescription('Ajoute une note sur un utilisateur')
+  // Restreint l'utilisation de la commande aux administrateurs
+  .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
   .addUserOption(o =>
     o
       .setName('membre')
@@ -21,6 +24,11 @@ export const data = new SlashCommandBuilder()
   );
 
 export async function execute(interaction) {
+  // Vérification des permissions administrateur
+  if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+    return interaction.reply({ content: '❌ Vous devez être administrateur pour utiliser cette commande.', ephemeral: true });
+  }
+
   // Création du dossier /data et du fichier notes.json si nécessaire
   const dataDir = resolve(process.cwd(), 'data');
   if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
