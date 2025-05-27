@@ -1,4 +1,11 @@
-# ProtectMaster Ultimate Full
+# 🛡️ ProtectMaster Ultimate Full
+
+Bot Discord complet avec :
+- Modération avancée
+- Système d'économie (XP, monnaie)
+- Commandes fun (blague, 8ball, gif, images…)
+- Protection anti-raid
+- Dashboard web en temps réel (Socket.IO) avec login sécurisé
 
 ## 🛠️ Prérequis
 
@@ -15,7 +22,9 @@
    ```
    Si besoin, installez manuellement les packages principaux :
    ```bash
-   npm install discord.js @discordjs/rest @discordjs/builders sqlite3 weather-js node-fetch@2 dotenv
+   npm install discord.js @discordjs/rest @discordjs/builders dotenv sqlite3 weather-js node-fetch@2
+   npm install express ejs socket.io socket.io-client express-session bcrypt
+
    ```
 
 4. Modifiez le fichier `.env` à la racine et ajoutez-y :
@@ -26,8 +35,8 @@
    # ID de l'application (Client ID)
    CLIENT_ID=VotreClientID
 
-   # (Optionnel) Prefix pour les anciennes commandes si vous en avez
-   PREFIX=/
+   # ID de votre serveur ( Guild ID )
+   GUILD_ID=VotreGuildID
    ```
 
 ## 🚀 Déploiement des Slash Commands
@@ -59,11 +68,10 @@ Puis ouvrez : http://localhost:3000  dans votre navigateur.
 ## 📋 Commandes & Structure
 
 - **Commandes Slash** : dans le dossier `bot/commands/`
-- **Events** : dans le dossier `bot/events/` (welcome, autorole, etc.)
 - **Données** : stockage JSON et SQLite dans le dossier `data/`
 
 Tapez `/help` dans Discord pour afficher la liste complète des commandes.
 
 ## ❓ Support
 
-Pour toute question ou problème, contactez **Eniooo** ou ouvrez une issue sur le dépôt.
+Pour toute question ou problème, contactez **eniooo_** en mp discord ou ouvrez une issue sur le dépôt.
