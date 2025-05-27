@@ -1,16 +1,32 @@
 {
   "name": "protectmaster-ultimate-full",
   "version": "1.0.0",
+  "description": "ProtectMaster Ultimate Full — un bot Discord complet avec modération, économie, fun, et plus encore",
   "type": "module",
+  "main": "bot/index.js",
+  "engines": {
+    "node": ">=16.9.0"
+  },
   "scripts": {
+    "deploy-commands": "node bot/deploy-commands.js",
     "bot": "node bot/index.js",
-    "dashboard": "node dashboard/index.js"
+    "dashboard": "node dashboard/index.js",
+    "start": "npm run bot"
   },
   "dependencies": {
-    "discord.js": "^14.11.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "ejs": "^3.1.8",
-    "sqlite3": "^5.1.6"
-  }
+    "@discordjs/builders": "^1.11.2",
+    "@discordjs/rest": "^2.5.0",
+    "bcrypt": "^6.0.0",
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "node-fetch": "^2.7.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "sqlite3": "^5.1.7",
+    "weather-js": "^2.0.0"
+  },
+  "license": "MIT"
 }
