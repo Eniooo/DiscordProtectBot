@@ -1,2 +1,0 @@
-# ProtectMaster
-DiscordBotProtect
