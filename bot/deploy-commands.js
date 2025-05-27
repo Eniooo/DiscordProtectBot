@@ -1,16 +1,22 @@
 import 'dotenv/config';
 import fs from 'fs';
 import { REST, Routes } from 'discord.js';
-import { resolve } from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
+import { dirname, resolve } from 'path';
 
-const commandsDir = resolve(process.cwd(), 'bot', 'commands');
-const commandFiles = fs.readdirSync(commandsDir).filter(f => f.endsWith('.js'));
+// __dirname en ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// On pointe directement vers le dossier `commands` au même niveau
+const commandsDir = resolve(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsDir).filter(file => file.endsWith('.js'));
 
 const commands = [];
 for (const file of commandFiles) {
   const filePath = resolve(commandsDir, file);
-  // import dynamique pour récupérer data
-  const { data } = await import(`file://${filePath}`);
+  const fileUrl = pathToFileURL(filePath).href;
+  const { data } = await import(fileUrl);
   commands.push(data.toJSON());
 }
 

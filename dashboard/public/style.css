@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #121212;
+    color: #eee;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1f1f1f;
+    padding: 1rem;
+  }
+  header h1 {
+    margin: 0;
+  }
+  header .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  button {
+    background: #4ea1f3;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+  }
+  a {
+    color: #4ea1f3;
+    text-decoration: none;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .card {
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 1rem;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  .card h2 {
+    margin-top: 0;
+  }
+  .card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .card li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #333;
+  }
+  .btn-clear {
+    background: transparent;
+    border: none;
+    color: #f33;
+    cursor: pointer;
+  }
+  .toast {
+    background: #333;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border-radius: 4px;
+    animation: fadeIn 0.5s ease;
+  }
+  .toast.error {
+    background: #a33;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  

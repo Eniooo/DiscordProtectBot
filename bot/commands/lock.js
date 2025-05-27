@@ -10,7 +10,7 @@ export async function execute(interaction) {
   const channel = interaction.channel;
   
   try {
-    await channel.permissionOverwrites.edit(everyone, { SEND_MESSAGES: false });
+    await channel.permissionOverwrites.edit(everyone, { SendMessages: false });
     await interaction.reply({ content: '🔒 Salon verrouillé ! By Eniooo', ephemeral: false });
 
     const logChannel = interaction.guild.channels.cache.get('1358548828004814939');

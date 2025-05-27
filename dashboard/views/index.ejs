@@ -1,13 +1,109 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>Dashboard ProtectMaster</title></head>
-<body style="background:#121212;color:white;font-family:sans-serif;padding:2rem">
-  <h1>ProtectMaster - Dashboard</h1>
-  <ul>
-    <li>âœ… Logs</li>
-    <li>âœ… Warns</li>
-    <li>âœ… Utilisateurs</li>
-    <li>âœ… Classement XP</li>
-  </ul>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ProtectMaster Dashboard</title>
+  <link rel="stylesheet" href="/public/style.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <header>
+    <h1>ProtectMaster Dashboard</h1>
+    <div class="controls">
+      <button id="toggleAnti">Loading…</button>
+      <span>Connecté en tant que <strong><%= user %></strong></span>
+      <a href="/logout">Déconnexion</a>
+    </div>
+  </header>
+
+  <section id="notifications"></section>
+
+  <div class="cards">
+    <div class="card">
+      <h2>?? Warns</h2>
+      <ul id="warns"></ul>
+    </div>
+    <div class="card">
+      <h2>?? Bans</h2>
+      <ul id="bans"></ul>
+    </div>
+  </div>
+
+  <script>
+    const socket     = io();
+    const warnsUl    = document.getElementById('warns');
+    const bansUl     = document.getElementById('bans');
+    const toggleBtn  = document.getElementById('toggleAnti');
+    const notifBox   = document.getElementById('notifications');
+
+    // Rendu d’une toast
+    function toast(msg, isError = false) {
+      const div = document.createElement('div');
+      div.className = 'toast' + (isError ? ' error' : '');
+      div.textContent = msg;
+      notifBox.append(div);
+      setTimeout(() => div.remove(), 4000);
+    }
+
+    // ?? Initial data
+    socket.on('initialData', ({ warns, bans, antiraid }) => {
+      toggleBtn.textContent = antiraid ? 'Anti-Raid ON' : 'Anti-Raid OFF';
+      warns.forEach((w, i) => renderWarn(w, i));
+      bans.forEach((b, i) => renderBan(b, i));
+    });
+
+    // ??? Toggle antiraid
+    toggleBtn.addEventListener('click', () => {
+      socket.emit('toggleAntiraid');
+    });
+    socket.on('antiraidChanged', state => {
+      toggleBtn.textContent = state ? 'Anti-Raid ON' : 'Anti-Raid OFF';
+      toast(`Anti-Raid ${state ? 'activé' : 'désactivé'}`);
+    });
+
+    // ??? Rendu warns/bans
+    function renderWarn(w, i) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${w.timestamp} – ${w.user} (${w.reason})
+        <button class="btn-clear" data-idx="${i}" data-type="warn">??</button>
+      `;
+      warnsUl.append(li);
+    }
+    function renderBan(b, i) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${b.timestamp} – ${b.user} (${b.reason})
+        <button class="btn-clear" data-idx="${i}" data-type="ban">??</button>
+      `;
+      bansUl.append(li);
+    }
+
+    // ?? Mises à jour en direct
+    socket.on('warnsUpdated', list => {
+      warnsUl.innerHTML = '';
+      list.forEach(renderWarn);
+      toast('Liste des warns mise à jour');
+    });
+    socket.on('bansUpdated', list => {
+      bansUl.innerHTML = '';
+      list.forEach(renderBan);
+      toast('Liste des bans mise à jour');
+    });
+
+    // ?? Suppression d’un warn/ban
+    document.body.addEventListener('click', e => {
+      if (e.target.matches('.btn-clear')) {
+        const idx = parseInt(e.target.dataset.idx);
+        const type = e.target.dataset.type;
+        socket.emit(type === 'warn' ? 'clearWarn' : 'clearBan', idx);
+      }
+    });
+
+    // ?? System messages
+    socket.on('system', data => {
+      toast(data.msg);
+    });
+  </script>
 </body>
 </html>
