@@ -67,4 +67,4 @@ Tapez `/help` dans Discord pour afficher la liste complète des commandes.
 
 ## ❓ Support
 
-Pour toute question ou problème, contactez **eniooo_** ou ouvrez une issue sur le dépôt.
+Pour toute question ou problème, contactez sur discord **eniooo_** ou ouvrez une issue sur le dépôt.
