@@ -15,7 +15,8 @@
    ```
    Si besoin, installez manuellement les packages principaux :
    ```bash
-   npm install discord.js @discordjs/rest @discordjs/builders sqlite3 weather-js node-fetch@2 dotenv
+   npm install discord.js @discordjs/rest @discordjs/builders dotenv sqlite3 weather-js node-fetch@2
+   npm install express ejs socket.io socket.io-client express-session bcrypt
    ```
 
 4. Créez un fichier `.env` à la racine et ajoutez-y :
