@@ -26,6 +26,9 @@
 
    # ID de l'application (Client ID)
    CLIENT_ID=VotreClientID
+
+   # ID du Serveur ( Guild ID )
+   GUILD_ID=VotreServerID
    
    ```
 
