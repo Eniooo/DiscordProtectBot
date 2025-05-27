@@ -1,0 +1,8 @@
+{
+  "antiSpam": true,
+  "antiLien": true,
+  "antiEveryone": true,
+  "logsEnabled": true,
+  "funCommands": true,
+  "logChannelName": "logs-bot"
+}

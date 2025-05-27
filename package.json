@@ -1,0 +1,16 @@
+{
+  "name": "protectmaster-ultimate-full",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "bot": "node bot/index.js",
+    "dashboard": "node dashboard/index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "ejs": "^3.1.8",
+    "sqlite3": "^5.1.6"
+  }
+}
