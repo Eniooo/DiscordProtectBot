@@ -25,9 +25,7 @@
 
    # ID de l'application (Client ID)
    CLIENT_ID=VotreClientID
-
-   # (Optionnel) Prefix pour les anciennes commandes si vous en avez
-   PREFIX=/
+   
    ```
 
 ## 🚀 Déploiement des Slash Commands
@@ -59,7 +57,6 @@ Puis ouvrez : http://localhost:3000  dans votre navigateur.
 ## 📋 Commandes & Structure
 
 - **Commandes Slash** : dans le dossier `bot/commands/`
-- **Events** : dans le dossier `bot/events/` (welcome, autorole, etc.)
 - **Données** : stockage JSON et SQLite dans le dossier `data/`
 
 Tapez `/help` dans Discord pour afficher la liste complète des commandes.
