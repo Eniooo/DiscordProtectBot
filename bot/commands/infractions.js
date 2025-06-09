@@ -1,4 +1,5 @@
-import { SlashCommandBuilder } from 'discord.js';
+// === infractions.js ===
+import { SlashCommandBuilder, PermissionsBitField } from 'discord.js';
 import fs from 'fs';
 import { resolve } from 'path';
 
@@ -7,6 +8,8 @@ const warnPath = resolve(process.cwd(), 'data', 'warns.json');
 export const data = new SlashCommandBuilder()
   .setName('infractions')
   .setDescription('Liste les avertissements d’un membre')
+  // Restreint l'utilisation de la commande aux administrateurs
+  .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
   .addUserOption(option =>
     option
       .setName('membre')
@@ -15,6 +18,11 @@ export const data = new SlashCommandBuilder()
   );
 
 export async function execute(interaction) {
+  // Vérification des permissions administrateur
+  if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+    return interaction.reply({ content: '❌ Vous devez être administrateur pour utiliser cette commande.', ephemeral: true });
+  }
+
   // Si le fichier n'existe pas, aucun avertissement n'est enregistré
   if (!fs.existsSync(warnPath)) {
     return interaction.reply({ content: '📋 Aucun avertissement enregistré.', ephemeral: false });
